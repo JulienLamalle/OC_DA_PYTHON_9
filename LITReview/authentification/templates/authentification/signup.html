@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block title %}
+<title>LITReview - Inscrivez-vous</title>
+{% endblock %} {% block content %}
+<h2>Inscription</h2>
+{% if form.errors %} {{ form.errors }} {% endif %}
+<form method="post" class="form-control">
+  {{ form.as_p }} {% csrf_token %}
+  <div class="mx-auto text-center w-75 d-grid gap-2 my-4">
+    <button type="submit" class="btn btn-primary btn-lg">S’inscrire</button>
+  </div>
+  <a href="{% url 'login' %}">Se connecter</a>
+</form>
+{% endblock content %}

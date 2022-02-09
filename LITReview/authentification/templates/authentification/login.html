@@ -1,0 +1,25 @@
+{% extends 'base.html' %} {% block title %}
+<title>LITReview - Connectez-vous</title>
+{% endblock %} {% block content %}
+<div class="mt-5 w-100 h-100 content-login">
+  <div class="account-login">
+    <h2>Connectez-vous</h2>
+    <form method="POST" class="form-control">
+      {% csrf_token %} {{ form.as_p }}
+      <div class="mx-auto text-center w-75 d-grid gap-2">
+        <button type="submit" class="btn btn-primary btn-lg my-2">Connexion</button>
+      </div>
+    </form>
+  </div>
+  {% if message %}
+  <div">
+    <p class="text-danger">{{ message }}</p>
+  </div>
+  {% endif %}
+  <div class="signup">
+    <h2>Pas encore inscrit ?</h2>
+    <p>Inscrivez-vous maintenant</p>
+    <a href="{% url 'signup' %} ">S'inscrire</a>
+  </div>
+</div>
+{% endblock %}

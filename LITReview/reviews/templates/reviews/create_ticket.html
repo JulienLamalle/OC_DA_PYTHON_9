@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block title %}
+<title>LITReview - Crééz un ticket</title>
+{% endblock %} {% block content %}
+<div>
+  <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Créer un ticket" class="btn btn-primary" />
+  </form>
+</div>
+{% endblock %}
