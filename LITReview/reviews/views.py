@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views.generic import View
 from django.contrib.auth import get_user_model
 from django.db.models import Q, Value, CharField
+from django.contrib import messages
 
 from reviews.forms import DeleteReviewForm, DeleteTicketForm, ReviewForm, TicketForm, DeleteUserFollowsForm, UserFollowsForm
 from reviews.models import Ticket, Review, UserFollows
@@ -79,10 +80,13 @@ class UserFollowsView(LoginRequiredMixin, View):
     user_followed_by = self.model.objects.filter(followed_user=request.user)
     query = request.GET.get('user')
     search_result = []
+
     if query is not None:
       try:
         search_result = User.objects.all().filter(
           username__icontains=query).exclude(Q(username=request.user.username) | Q(username__in=[str(user.followed_user) for user in user_following]))
+        if not search_result:
+          messages.add_message(request, messages.WARNING, "Aucun utilisateur n'a pu être trouvé ! Veuillez réessayer.")
       except User.DoesNotExist:
         search_result = []
     return render(request, self.template_name, context={'form': self.form_class(), 'delete_form': self.delete_form(), 'user_following': user_following, 'user_followed_by': user_followed_by, 'search_result': search_result})

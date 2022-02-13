@@ -1,6 +1,18 @@
 {% extends 'base.html' %} {% block title %}
 <title>LITReview - Vos abonnements</title>
 {% endblock %} {% block content %}
+{% if messages %} {% for message in messages %}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{ message}}
+  <button
+    type="button"
+    class="btn-close"
+    data-bs-dismiss="alert"
+    aria-label="Close"
+  ></button>
+</div>
+{% endfor %} {% endif %}
+
 <section class="my-4">
   <h3 class="text-center mb-3">Suivre d'autres utilisateurs</h3>
   <form method="GET" action="">
@@ -10,8 +22,8 @@
       <input class="btn btn-primary btn-lg" type="submit" value="Suivre" />
     </div>
   </form>
-  {% for user in search_result %}
 
+  {% for user in search_result %}
   <form method="POST" class="w-100">
     {% csrf_token %}
     <div class="row mx-0 px-0 my-3">
@@ -39,7 +51,11 @@
       <p class="w-75 align-items-center">
         {{ followed_user.followed_user.username }}
       </p>
-      <input type="hidden" name="user_id" value="{{followed_user.followed_user.id}}" />
+      <input
+        type="hidden"
+        name="user_id"
+        value="{{followed_user.followed_user.id}}"
+      />
       <input
         type="submit"
         class="btn btn-danger w-25 flex-end"
